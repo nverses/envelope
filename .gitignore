@@ -1,0 +1,7 @@
+build
+.cache
+cmake-build-debug/
+.idea
+*.swp
+*.swo
+~*
