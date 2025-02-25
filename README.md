@@ -21,6 +21,11 @@ cmake --build build -j
 cmake --build build --target test
 ```
 
+Once the commands succeeds, python library `pyenvlp` will be available
+at `./build/lib/pyenvlp`.
+
+# Python Usage
+
 
 # C++ envelope library
 

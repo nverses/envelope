@@ -90,6 +90,83 @@ void init_envlp(py::module& m)
                         "lbfgs_iter"_a = st.lbfgs_iter);
       });
 
+  py::class_<Regression>(m, "Regression")
+      .def(py::init<bool>(), py::arg("fit_intercept") = true)
+      .def(
+          "fit",
+          [](Regression& reg, py::array x, py::array y, py::array w) {
+            reg.fit(fromBuffer<double>(x), fromBuffer<double>(y),
+                    fromBuffer<double>(w));
+            return reg;
+          },
+          py::arg("x"), py::arg("y"), py::arg("w") = py::array_t<double>())
+      .def(
+          "fit_gram",
+          [](Regression& reg, py::array xtx, py::array xty, py::array yty,
+             int nrows) {
+            reg.fitGram(fromBuffer<double>(xtx), fromBuffer<double>(xty),
+                        fromBuffer<double>(yty), nrows);
+            return reg;
+          },
+          py::arg("xtx"), py::arg("xty"),
+          py::arg("yty") = py::array_t<double>(), py::arg("nrows") = 0)
+      .def_property_readonly("intercept_",
+                             [](Regression& reg) {
+                               return py::array_t<double>(toBuffer<double>(
+                                   reg.getInterceptOffset(true)));
+                             })
+      .def("coefs",
+           [](Regression& reg) {
+             return py::array_t<double>(toBuffer<double>(reg.coefs()));
+           })
+      .def_property_readonly(
+          "coef_",
+          [](Regression& reg) {
+            return py::array_t<double>(toBuffer<double>(reg.coefs()));
+          })
+      .def(
+          "predict",
+          [](Regression& reg, py::array x, bool include_intercept) {
+            Eigen::MatrixXd yh =
+                reg.predict(fromBuffer<double>(x), include_intercept);
+            return py::array_t<double>(toBuffer<double>(yh));
+          },
+          py::arg("x"), py::arg("include_intercept") = true)
+      .def("get_nrows", &Regression::getNRows)
+      .def("get_xsum",
+           [](Regression& reg) {
+             return py::array_t<double>(toBuffer<double>(reg.getXSum()));
+           })
+      .def("get_ysum",
+           [](Regression& reg) {
+             return py::array_t<double>(toBuffer<double>(reg.getYSum()));
+           })
+      .def("to_json_str", &Regression::toJsonString)
+      .def("from_json_str", &Regression::fromJsonString)
+      .def(py::pickle(
+          // __getstate__
+          [](const Regression& reg) { return linearTypeToTuple(reg); },
+          // __setstate__
+          [](py::tuple t) { return tupleToLinearType<Regression>(t); }));
+
+  py::class_<Ridge, Regression>(m, "Ridge")
+      .def(py::init<bool, double>(), py::arg("fit_intercept") = true,
+           py::arg("l2_lambda") = 0.0)
+      .def("set_l2_lambda", &Ridge::setL2Lambda)
+      .def("get_l2_lambda", &Ridge::getL2Lambda)
+      .def(
+          "fit_gram",
+          [](Ridge& reg, py::array xtx, py::array xty, py::array yty,
+             int nrows) {
+            reg.fitGram(fromBuffer<double>(xtx), fromBuffer<double>(xty),
+                        fromBuffer<double>(yty), nrows);
+            return reg;
+          },
+          py::arg("xtx"), py::arg("xty"),
+          py::arg("yty") = py::array_t<double>(), py::arg("nrows") = 0)
+      .def(py::pickle([](const Ridge& reg) { return linearTypeToTuple(reg); },
+                      [](py::tuple t) { return tupleToLinearType<Ridge>(t); }));
+
   // fitter::linear compatible regression class
   py::class_<RidgeEnvlp, Ridge>(m, "RidgeEnvlp")
       .def(py::init<bool, double, bool, bool, bool, int>(),
