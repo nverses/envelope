@@ -1,16 +1,16 @@
 #pragma once
 
-#include <iostream>
-
 #include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
 
-#include "numeric/eigen_types.hpp"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
-#include <pybind11/pybind11.h>
+#include <iostream>
 
-using namespace bedrock::numeric;
+#include "envelope/eigen_types.hpp"
+
+using namespace envelope;
 
 // forward decl
 void init_envlp(pybind11::module &m);
@@ -171,7 +171,7 @@ namespace {
     d.Parse(is.str().c_str());
     T reg;
     reg.fromJson(d);
-    return std::move(reg);
+    return reg;
   }
 
 }  // namespace

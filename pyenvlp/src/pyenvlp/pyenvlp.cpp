@@ -3,23 +3,21 @@
 #include "pyenvlp.hpp"
 
 #include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+#include "envelope/eigen_types.hpp"
 #include "envelope/envopt.hpp"
 #include "envelope/la_util.hpp"
+#include "envelope/regression.hpp"
 #include "envelope/regression_env.hpp"
-#include <numeric/eigen_types.hpp>
-#include <pybind11/pybind11.h>
 
 using namespace pybind11::literals;
-using namespace bedrock::numeric;
-using namespace kinetic::envelope;
+using namespace envelope;
 namespace py = pybind11;
 
 void init_envlp(py::module& m)
 {
-  const auto pylinear = py::module_::import("pylinear");
-
   py::class_<EnvOpt>(m, "EnvOpt")
       .def_static(
           "solve_envelope",

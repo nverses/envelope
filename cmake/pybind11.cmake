@@ -1,23 +1,19 @@
-include(ExternalProject)
+include(FetchContent)
 
-project(pybind11)
+FetchContent_Declare(
+    pybind11
+    GIT_REPOSITORY https://github.com/pybind/pybind11
+    GIT_TAG        v2.13.6
+)
 
-ExternalProject_Add(${PROJECT_NAME}-external
-        GIT_REPOSITORY https://github.com/pybind/pybind11.git
-        GIT_TAG "v2.13.6"
-        GIT_SHALLOW TRUE
-        SOURCE_DIR ${THIRD_PARTY_DIR}/${PROJECT_NAME}
-        BUILD_COMMAND ""
-        INSTALL_COMMAND ""
-        CONFIGURE_COMMAND "")
-add_library(${PROJECT_NAME} INTERFACE)
-add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}-external)
-target_include_directories(${PROJECT_NAME} SYSTEM INTERFACE ${THIRD_PARTY_DIR}/${PROJECT_NAME}/include)
+FetchContent_GetProperties(pybind11)
+if(NOT pybind11_POPULATED)
+    FetchContent_Populate(pybind11)
+    add_subdirectory(${pybind11_SOURCE_DIR} ${pybind11_BINARY_DIR})
+endif()
+FetchContent_MakeAvailable(pybind11)
 
 
-set(pybind11_DIR ${CMAKE_BINARY_DIR}/third_party/pybind11)
+set(pybind11_DIR "${pybind11_SOURCE_DIR}")
 option(PYBIND11_FINDPYTHON, ON)
-
-find_package(Python COMPONENTS Interpreter Development)
-find_package(pybind11 CONFIG)
-
+message("-- pybind11_DIR=${pybind11_DIR} pybind11_FOUND=${pybind11_FOUND} pybind11_VERSION=${pybind11_VERSION}") 
