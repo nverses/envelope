@@ -14,6 +14,11 @@ You will need to do this on `linux` machine, also have `cmake` and
 In most cases, it should be sufficient to `git clone` this repo, 
 and run inside the `envelope` directory.
 
+You will also need the following python packages:
+    - pandas
+    - scipy
+    - pytest
+
 
 ```
 cmake -S . -B build
