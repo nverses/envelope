@@ -16,10 +16,8 @@ def find_dataroot():
         return os.environ["TEST_DATA_DIR"]
     pwd = os.path.dirname(os.path.realpath(__file__))
     for candidate_path in [
-        f"{pwd}/../../envelope/cpp/tests/data",
-        f"{pwd}/../../../envelope/cpp/tests/data",
-        f"{pwd}/../../cpp/tests/data",
-        f"{pwd}/../../../cpp/tests/data",
+        f"{pwd}/../../envelope/data",
+        f"{pwd}/../../../envelope/data",
     ]:
         if os.path.exists(candidate_path):
             return candidate_path

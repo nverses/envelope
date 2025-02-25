@@ -322,6 +322,8 @@ Ridge::Ridge(bool fit_intercept, double l2_lambda)
 {
 }
 
+Ridge::~Ridge() {}
+
 void Ridge::fitGram(const DMatV& xtx, const DMatV& xty, const DMatV&, int)
 {
   // incurs copy since we need to add to diag

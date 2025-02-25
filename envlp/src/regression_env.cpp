@@ -337,8 +337,8 @@ void RidgeEnvlp::fitGram(const DMatV& xtx, const DMatV& xty, const DMatV& yty,
       m_coef.block(1, 0, m_coef.rows() - 1, m_coef.cols()) = coef;
     }
     else {
-      DMat etahat       = m_gamma.transpose() * xtxpni * m_coef_base;
-      m_omega           = m_gamma.transpose() * xtxpni * m_gamma;  // u x u
+      DMat etahat       = m_gamma.transpose() * xtxp * m_coef_base;
+      m_omega           = m_gamma.transpose() * xtxp * m_gamma;  // u x u
       DMat omegahat_inv = LAU::cholinv(m_omega);
       m_coef            = m_gamma * omegahat_inv * etahat;
     }

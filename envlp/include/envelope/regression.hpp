@@ -69,6 +69,7 @@ namespace envelope {
   {
   public:
     Ridge(bool fit_intercept = true, double l2_lambda = 0.0);
+    ~Ridge() override;
 
     // solve xtx, xty directly, yty and nrows are optional
     void fitGram(const DMatV& xtx, const DMatV& xty, const DMatV& yty = DMatV(),
