@@ -167,7 +167,6 @@ void init_envlp(py::module& m)
       .def(py::pickle([](const Ridge& reg) { return linearTypeToTuple(reg); },
                       [](py::tuple t) { return tupleToLinearType<Ridge>(t); }));
 
-  // fitter::linear compatible regression class
   py::class_<RidgeEnvlp, Ridge>(m, "RidgeEnvlp")
       .def(py::init<bool, double, bool, bool, bool, int>(),
            "fit_intercept"_a = true, "l2_lambda"_a = 0.0, "zscore_x"_a = false,

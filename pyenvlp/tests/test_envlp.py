@@ -14,19 +14,16 @@ np.set_printoptions(linewidth=200, suppress=True)
 def find_dataroot():
     if "TEST_DATA_DIR" in os.environ:
         return os.environ["TEST_DATA_DIR"]
-    user = getpass.getuser()
-    userpath = (f"/home/{user}/git/platform/kinetic/envelope/cpp/tests/data",)
     pwd = os.path.dirname(os.path.realpath(__file__))
     for candidate_path in [
         f"{pwd}/../../envelope/cpp/tests/data",
         f"{pwd}/../../../envelope/cpp/tests/data",
         f"{pwd}/../../cpp/tests/data",
         f"{pwd}/../../../cpp/tests/data",
-        userpath,
     ]:
         if os.path.exists(candidate_path):
             return candidate_path
-    return userpath
+    return None
 
 
 DATAROOT = find_dataroot()
@@ -90,7 +87,7 @@ def test_opt():
     res3 = pyenvlp.envMU(M, U, 2)
     for k, v in res2.items():
         print(f"\n{k}\n{v}")
-    print(f"envMU_un took: {time.time()-t0:.4f} secs")
+    print(f"envMU_un took: {time.time() - t0:.4f} secs")
 
 
 def test_fit():
