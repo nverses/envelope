@@ -26,8 +26,8 @@ at `./build/lib/pyenvlp`.
 
 # Howto
 
-* [starter guide](./docs/envlp01_guide.ipynb)
-* [regression class](./docs/envlp02_regression.ipynb)
+* [envlp01: starter guide](./docs/envlp01_guide.ipynb)
+* [envlp02: regression class](./docs/envlp02_regression.ipynb)
 
 
 # C++ envelope library
@@ -36,14 +36,14 @@ The library implements optimization routine using fast L-BFGS routine that
 exploits SSE2 optimized vector routines. This requires modern CPU's capable
 of handling AVX/SSE2 instructions in somewhat homogeneous computing environment.
 
-* [la_util.hpp](./cpp/include/envelope/la_util.hpp) :
+* [la_util.hpp](./envlp/include/envelope/la_util.hpp) :
     Implements linear algebra functions that are required for envelope optimization.
 
-* [envopt.hpp](./cpp/include/envelope/envopt.hpp) :
+* [envopt.hpp](./envlp/include/envelope/envopt.hpp) :
     Core of the envelope model where optimization solves for `gammahat`, `gamma0hat`,
     given inputs `M` and `U` matrices.
 
-* [regression_env.hpp](./cpp/include/envelope/regression_env.hpp)
+* [regression_env.hpp](./envlp/include/envelope/regression_env.hpp)
     Implements multi-X predictor envelope `RidgeEnvlp` fitter, compatible with
     `fitter::linear` fitters. This object can be used within `blender.py` as
     part of available fitters for prediction problem.
@@ -54,16 +54,16 @@ of handling AVX/SSE2 instructions in somewhat homogeneous computing environment.
 Fitting the envelope model involves an objective that needs to be solved using optimization
 techniques. This module separates the implementation into 3 logical components:
 
-* [pyenvlp.opt](./python/src/pyenvlp/opt.py) :
+* [pyenvlp.opt](./python/pyenvlp/opt.py) :
     Implements optimization routine to solve for gammahat, gamma0hat in python.
     Uses the cpp optimization library if exists.
 
-* [pyenvlp.fit](./python/src/pyenvlp/fit.py) :
+* [pyenvlp.fit](./python/pyenvlp/fit.py) :
     function that accepts X, Y numpy arrays, constructs the necessary
     input into the optimization function, and creates evaluation stats
     using the optimized results.
 
-* [pyenvlp.lau](./python/src/pyenvlp/lau.py) :
+* [pyenvlp.lau](./python/pyenvlp/lau.py) :
     linear algebra utility functions
 
 
