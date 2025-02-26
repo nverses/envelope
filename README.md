@@ -24,7 +24,10 @@ cmake --build build --target test
 Once the commands succeeds, python library `pyenvlp` will be available
 at `./build/lib/pyenvlp`.
 
-# Python Usage
+# Howto
+
+* [starter guide](./docs/envlp01_guide.ipynb)
+* [regression class](./docs/envlp02_regression.ipynb)
 
 
 # C++ envelope library
