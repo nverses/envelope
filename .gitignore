@@ -6,3 +6,5 @@ cmake-build-debug/
 *.swo
 ~*
 __pycache__
+pyenvlp-*.whl
+pyenvlp.egg-info
