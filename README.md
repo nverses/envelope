@@ -11,23 +11,27 @@ is generalizable to "response" envelopes as well.
 
 You will need to do this on `linux` machine, also have `cmake` and
 `build-essentials` (compiler, toolchain) already installed.
+
+## Python
+
+Installing in python
+
+```
+pip install .
+```
+
+The `pyenvlp` package should now be available.
+
+## C++ Library
+
 In most cases, it should be sufficient to `git clone` this repo, 
 and run inside the `envelope` directory.
-
-You will also need the following python packages:
-    - pandas
-    - scipy
-    - pytest
-
 
 ```
 cmake -S . -B build
 cmake --build build -j
 cmake --build build --target test
 ```
-
-Once the commands succeeds, python library `pyenvlp` will be available
-at `./build/lib/pyenvlp`.
 
 # Howto
 
