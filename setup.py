@@ -48,4 +48,5 @@ setup(
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
     python_requires=">=3.7",
+    license_files=("LICENSE.txt",),
 )
